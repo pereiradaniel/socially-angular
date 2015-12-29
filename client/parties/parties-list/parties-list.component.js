@@ -7,13 +7,31 @@ angular.module('socially').directive('partiesList', function () {
       $reactive(this).attach($scope);
 
       this.newParty = {};
+      this.perPage = 3;
+      this.page = 1;
+      this.sort = {
+        name: 1
+      };
+      this.orderProperty = '1';
 
-      this.subscribe('parties');
 
       this.helpers({
         parties: () => {
-          return Parties.find({});
+          return Parties.find({}, { sort : this.getReactively('sort') });
+        },
+        partiesCount: () => {
+          return Counts.get('numberOfParties');
         }
+      });
+
+      this.subscribe('parties', () => {
+        return [
+          {
+            limit: parseInt(this.perPage),
+            skip: parseInt((this.getReactively('page') - 1) * this.perPage),
+            sort: this.getReactively('sort')
+          }
+        ]
       });
 
       this.addParty = () => {
@@ -24,7 +42,17 @@ angular.module('socially').directive('partiesList', function () {
 
       this.removeParty = (party) => {
         Parties.remove({_id: party._id});
-      }
+      };
+
+      this.pageChanged = (newPage) => {
+        this.page = newPage;
+      };
+
+      this.updateSort = () => {
+        this.sort = {
+          name: parseInt(this.orderProperty)
+        }
+      };
     }
   }
 });
