@@ -1,4 +1,5 @@
   angular.module('socially', [
     'angular-meteor',
-    'ui.router'
+    'ui.router',
+    'accounts.ui'
   ]);
