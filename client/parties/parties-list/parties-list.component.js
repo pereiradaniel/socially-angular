@@ -8,6 +8,8 @@ angular.module('socially').directive('partiesList', function () {
 
       this.newParty = {};
 
+      this.subscribe('parties');
+
       this.helpers({
         parties: () => {
           return Parties.find({});
@@ -19,6 +21,7 @@ angular.module('socially').directive('partiesList', function () {
         Parties.insert(this.newParty);
         this.newParty = {};
       };
+
       this.removeParty = (party) => {
         Parties.remove({_id: party._id});
       }

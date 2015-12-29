@@ -1,4 +1,4 @@
-angular.module('socially').directive('partyDetails', function() {
+angular.module('socially').directive('partyDetails', function () {
   return {
     restrict: 'E',
     templateUrl: 'client/parties/party-details/party-details.html',
@@ -6,9 +6,15 @@ angular.module('socially').directive('partyDetails', function() {
     controller: function ($scope, $stateParams, $reactive) {
       $reactive(this).attach($scope);
 
+      this.subscribe('parties');
+      this.subscribe('users');
+
       this.helpers({
         party: () => {
-          return Parties.findOne({ _id: $stateParams.partyId });
+          return Parties.findOne({_id: $stateParams.partyId});
+        },
+        users: () => {
+          return Meteor.users.find({});
         }
       });
 
@@ -16,13 +22,14 @@ angular.module('socially').directive('partyDetails', function() {
         Parties.update({_id: $stateParams.partyId}, {
           $set: {
             name: this.party.name,
-            description: this.party.description
+            description: this.party.description,
+            'public': this.party.public
           }
         }, (error) => {
           if (error) {
             console.log('Oops, unable to update the party...');
           }
-          else {  
+          else {
             console.log('Done!');
           }
         });

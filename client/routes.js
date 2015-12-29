@@ -8,19 +8,19 @@ angular.module('socially')
         template: '<parties-list></parties-list>'
       })
       .state('partyDetails', {
-       url: '/parties/:partyId',
+        url: '/parties/:partyId',
         template: '<party-details></party-details>',
         resolve: {
           currentUser: ($q) => {
             if (Meteor.userId() == null) {
               return $q.reject('AUTH_REQUIRED');
-          }
-          else {
-            return $q.resolve();
+            }
+            else {
+              return $q.resolve();
+            }
           }
         }
-      }
-    });
+      });
 
     $urlRouterProvider.otherwise("/parties");
   })
