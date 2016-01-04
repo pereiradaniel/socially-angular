@@ -25,6 +25,8 @@ angular.module('socially').directive('partiesList', function () {
         }
       });
 
+      this.subscribe('users');
+
       this.subscribe('parties', () => {
         return [
           {
@@ -54,6 +56,24 @@ angular.module('socially').directive('partiesList', function () {
         this.sort = {
           name: parseInt(this.orderProperty)
         }
+      };
+
+      this.getPartyCreator = function(party){
+        if (!party) {
+          return '';
+        }
+
+        let owner = Meteor.users.findOne(party.owner);
+
+        if (!owner) {
+          return 'nobody';
+        }
+
+        if (Meteor.userId() !== null && owner._id === Meteor.userId()) {
+          return 'me';
+        }
+
+        return owner;
       };
     }
   }
