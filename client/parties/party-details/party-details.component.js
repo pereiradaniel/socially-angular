@@ -18,15 +18,50 @@ angular.module('socially').directive('partyDetails', function () {
         },
         isLoggedIn: () => {
           return Meteor.userId() !== null;
-        },
+        }
       });
+
+      this.map = {
+        center: {
+          latitude: 45,
+          longitude: -73
+        },
+        zoom: 8,
+        events: {
+          click: (mapModel, eventName, originalEventArgs) => {
+            if (!this.party)
+              return;
+
+            if (!this.party.location)
+              this.party.location = {};
+
+            this.party.location.latitude = originalEventArgs[0].latLng.lat();
+            this.party.location.longitude = originalEventArgs[0].latLng.lng();
+
+            $scope.$apply();
+          }
+        },
+        marker: {
+          options: { draggable: true },
+          events: {
+            dragend: (marker, eventName, args) => {
+              if (!this.party.location)
+                this.party.location = {};
+
+              this.party.location.latitude = marker.getPosition().lat();
+              this.party.location.longitude == marker.getPosition().lng();
+            }
+          }
+        }
+      };
 
       this.save = () => {
         Parties.update({_id: $stateParams.partyId}, {
           $set: {
             name: this.party.name,
             description: this.party.description,
-            'public': this.party.public
+            'public': this.party.public,
+            location: this.party.location
           }
         }, (error) => {
           if (error) {
