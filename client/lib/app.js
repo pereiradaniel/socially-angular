@@ -19,14 +19,13 @@ angular.module('socially').config(($mdIconProvider) => {
     .iconSet("image", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-image.svg");
 });
 
-
 function onReady() {
-	angular.bootstrap(document, ['socially'], {
-		strictDi: true
-	});
+  angular.bootstrap(document, ['socially'], {
+    strictDi: true
+  });
 }
 
-if (Meteor .isCordova)
-	angular.element(document).on("deviceready", onReady);
+if (Meteor.isCordova)
+  angular.element(document).on("deviceready", onReady);
 else
-	angular.element(document).ready(onReady);
+  angular.element(document).ready(onReady);
