@@ -1,4 +1,4 @@
-Meteor.publish("parties", function (options, searchString) {  
+Meteor.publish("parties", function (options, searchString) {
   if (!searchString || searchString == null) {
     searchString = '';
   }

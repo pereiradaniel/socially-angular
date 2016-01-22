@@ -41,6 +41,7 @@ angular.module('socially').directive('partyDetails', function () {
             this.party.location.latitude = originalEventArgs[0].latLng.lat();
             this.party.location.longitude = originalEventArgs[0].latLng.lng();
 
+            //scope apply required because this event handler is outside of the angular domain
             $scope.$apply();
           }
         },
@@ -52,7 +53,7 @@ angular.module('socially').directive('partyDetails', function () {
                 this.party.location = {};
 
               this.party.location.latitude = marker.getPosition().lat();
-              this.party.location.longitude == marker.getPosition().lng();
+              this.party.location.longitude = marker.getPosition().lng();
             }
           }
         }
@@ -75,7 +76,7 @@ angular.module('socially').directive('partyDetails', function () {
           }
         });
       };
-      
+
       this.invite = (user) => {
         Meteor.call('invite', this.party._id, user._id, (error) => {
           if (error) {

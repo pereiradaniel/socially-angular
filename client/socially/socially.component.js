@@ -5,7 +5,7 @@ angular.module('socially').directive('socially', function () {
     controllerAs: 'socially',
     controller: function ($scope, $reactive) {
       $reactive(this).attach($scope);
- 
+
       this.helpers({
         isLoggedIn: () => {
           return Meteor.userId() !== null;
