@@ -29,9 +29,14 @@ angular.module('socially').directive('partiesList', function () {
         },
         currentUserId: () => {
           return Meteor.userId();
+        },
+        images: () => {
+          return Images.find({});
         }
       });
 
+      this.subscribe('images');
+      
       this.map = {
         center: {
           latitude: 45,
