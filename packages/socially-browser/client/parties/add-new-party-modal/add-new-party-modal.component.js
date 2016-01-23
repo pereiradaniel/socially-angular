@@ -16,7 +16,7 @@ angular.module('socially.browser').directive('addNewPartyModal', function () {
 
       this.addNewParty = () => {
         this.newParty.owner = Meteor.userId();
-        this.newParty.images = this.newParty.images.map((image) => {
+        this.newParty.images = (this.newParty.images || {}).map((image) => {
           return image._id;
         });
 

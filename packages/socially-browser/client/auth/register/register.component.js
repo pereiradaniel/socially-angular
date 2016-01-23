@@ -1,4 +1,3 @@
-
 angular.module("socially.browser").directive('register', function() {
   return {
     restrict: 'E',

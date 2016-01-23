@@ -19,8 +19,9 @@ Package.onUse(function(api) {
     'client/lib/module.js',
     'client/auth/login/login.component.js',
     'client/auth/login/login.html',
-    'client/socially/socially.html'
-    ], 'client');
+    'client/socially/socially.html',
+    'client/parties/parties-list/parties-list.html'
+  ], 'client');
 });
 
 Package.onTest(function(api) {
