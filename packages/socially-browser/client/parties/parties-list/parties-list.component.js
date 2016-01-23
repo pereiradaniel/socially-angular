@@ -1,22 +1,17 @@
-angular.module('socially').directive('partiesList', function () {
+angular.module('socially.browser').directive('partiesList', function () {
   return {
     restrict: 'E',
-    templateUrl: 'client/parties/parties-list/parties-list.html',
+    templateUrl: '/packages/socially-browser/client/parties/parties-list/parties-list.html',
     controllerAs: 'partiesList',
     controller: function ($scope, $reactive, $mdDialog, $filter) {
       $reactive(this).attach($scope);
 
       this.perPage = 3;
-      this.page = 1;
-      this.sort = {
-        name: 1
-      };
       this.orderProperty = '1';
-      this.searchText = '';
 
       this.helpers({
         parties: () => {
-          return Parties.find({}, { sort : this.getReactively('sort') });
+          return Parties.find({}, {sort: this.sort});
         },
         users: () => {
           return Meteor.users.find({});
@@ -24,6 +19,11 @@ angular.module('socially').directive('partiesList', function () {
         partiesCount: () => {
           return Counts.get('numberOfParties');
         },
+        page: 1,
+        sort: {
+          name: 1
+        },
+        searchText: '',
         isLoggedIn: () => {
           return Meteor.userId() !== null;
         },
@@ -87,10 +87,10 @@ angular.module('socially').directive('partiesList', function () {
         return [
           {
             limit: parseInt(this.perPage),
-            skip: parseInt((this.getReactively('page') - 1) * this.perPage),
-            sort: this.getReactively('sort')
+            skip: parseInt((this.page - 1) * this.perPage),
+            sort: this.sort
           },
-          this.getReactively('searchText')
+          this.searchText
         ]
       });
 

@@ -6,18 +6,18 @@
     <form layout="column">
       <md-input-container>
         <label>Party Name</label>
-        <input ng-model="partyDetails.party.name" ng-disabled="partyDetails.party.owner != partyDetails.currentUserId" type="text" aria-label="Name">
+        <input ng-model="partyDetails.party.name" ng-disabled="party.owner != partyDetails.currentUserId" type="text" aria-label="Name">
       </md-input-container>
       <md-input-container>
         <label>Party Description</label>
-        <input ng-model="partyDetails.party.description" ng-disabled="partyDetails.party.owner != partyDetails.currentUserId" type="text" aria-label="Description">
+        <input ng-model="partyDetails.party.description" ng-disabled="party.owner != partyDetails.currentUserId" type="text" aria-label="Description">
       </md-input-container>
-      <md-checkbox ng-model="partyDetails.party.public" ng-disabled="partyDetails.party.owner != partyDetails.currentUserId" aria-label="Public">
+      <md-checkbox ng-model="partyDetails.party.public" ng-disabled="party.owner != partyDetails.currentUserId" aria-label="Public">
         Is public
       </md-checkbox>
 
       <div layout="row" layout-align="left">
-        <md-button ng-show="partyDetails.party.owner == partyDetails.currentUserId" ng-click="partyDetails.save()">Save</md-button>
+        <md-button ng-show="party.owner == partyDetails.currentUserId" ng-click="partyDetails.save()">Save</md-button>
         <md-button ng-href="/parties">Back</md-button>
       </div>
 

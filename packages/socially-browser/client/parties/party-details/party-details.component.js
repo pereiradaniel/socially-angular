@@ -1,7 +1,7 @@
-angular.module('socially').directive('partyDetails', function () {
+angular.module('socially.browser').directive('partyDetails', function () {
   return {
     restrict: 'E',
-    templateUrl: 'client/parties/party-details/party-details.html',
+    templateUrl: '/packages/socially-browser/client/parties/party-details/party-details.html',
     controllerAs: 'partyDetails',
     controller: function ($scope, $stateParams, $reactive) {
       $reactive(this).attach($scope);
@@ -31,16 +31,15 @@ angular.module('socially').directive('partyDetails', function () {
         },
         zoom: 8,
         events: {
-          click: (mapModel, eventName, originalEventArgs) => {
-            if (!this.party)
+          click: function (mapModel, eventName, originalEventArgs) {
+            if (!$scope.party)
               return;
 
-            if (!this.party.location)
-              this.party.location = {};
+            if (!$scope.party.location)
+              $scope.party.location = {};
 
-            this.party.location.latitude = originalEventArgs[0].latLng.lat();
-            this.party.location.longitude = originalEventArgs[0].latLng.lng();
-
+            $scope.party.location.latitude = originalEventArgs[0].latLng.lat();
+            $scope.party.location.longitude = originalEventArgs[0].latLng.lng();
             //scope apply required because this event handler is outside of the angular domain
             $scope.$apply();
           }
@@ -48,12 +47,12 @@ angular.module('socially').directive('partyDetails', function () {
         marker: {
           options: { draggable: true },
           events: {
-            dragend: (marker, eventName, args) => {
-              if (!this.party.location)
-                this.party.location = {};
+            dragend: function (marker, eventName, args) {
+              if (!$scope.party.location)
+                $scope.party.location = {};
 
-              this.party.location.latitude = marker.getPosition().lat();
-              this.party.location.longitude = marker.getPosition().lng();
+              $scope.party.location.latitude = marker.getPosition().lat();
+              $scope.party.location.longitude = marker.getPosition().lng();
             }
           }
         }
@@ -64,8 +63,7 @@ angular.module('socially').directive('partyDetails', function () {
           $set: {
             name: this.party.name,
             description: this.party.description,
-            'public': this.party.public,
-            location: this.party.location
+            'public': this.party.public
           }
         }, (error) => {
           if (error) {
